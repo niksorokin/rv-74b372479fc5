@@ -770,6 +770,9 @@ section.dark .body b{ color:#fff; }
 }
 @media print{ #stack .ly{ opacity:1 !important; transform:none !important; } }
 
+html.one main{ scroll-snap-type:none; }
+html.one #deck > section{ min-height:100vh; }
+
 </style>
 </head>
 <body>
@@ -1022,6 +1025,18 @@ section.dark .body b{ color:#fff; }
 </section>
 
 </main>
+<script>
+(function(){
+  // ?slide=N shows one slide only (for review boards)
+  const n = parseInt(new URLSearchParams(location.search).get('slide') || '', 10);
+  if (!n) return;
+  const all = [...document.querySelectorAll('#deck > section')];
+  if (!all[n-1]) return;
+  document.documentElement.classList.add('one');
+  all.forEach((s, i) => { if (i !== n-1) s.remove(); });
+  const c = document.getElementById('counter'); if (c) c.style.display = 'none';
+})();
+</script>
 
 <script>
   const deck = document.getElementById('deck');
